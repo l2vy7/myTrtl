@@ -85,9 +85,11 @@ Example error handling (JS):
 var myendpoint = 'https://v2.blacket.org/worker/user/acai';
 var content = {};
 fetch(myendpoint, {
-        headers : {
+        headers: {
             Cookie : 'connect.sid=sessionidhere'
-        }
+        },
+        method : 'GET',
+        body   : null
     })
     .then((d) => {
         d.json().then((j) => {
@@ -166,6 +168,19 @@ Object
     password : string - The user's password.
 ```
 
+To get the session ID, set the Cookie header to a blank string and extract the Session ID like so:   
+```js
+fetch('https://v2.blacket.org/worker/login', {
+    headers: {
+        Cookie : 'connect.sid=sessionidhere'
+    },
+    method : 'GET',
+    body   : null
+}).then((d) => {
+    var sessionID = d.headers.get('Set-Cookie').split(';')[0].replace('connect.sid=', '');
+});
+```
+
 ## ```/worker/claim```
 This is a simple HTTP **get** endpoint. It lets you claim daily tokens.
 
@@ -197,7 +212,7 @@ This is an HTTP **post** endpoint that lets you sell one-or-more blooks.
 Request structure:
 ```
 Object
-    blook : string - The blook's name.
+    blook    : string - The blook's name.
     quantity : int 
 ```
 
@@ -214,11 +229,82 @@ Response structure:
 ```
 Object
     error : bool - Has an error occurred?
-    news : array<object> - An array of news posts.
+    news  : array<object> - An array of news posts.
         Object
             title : string - The news post's title.
             image : string - The URL of the post's image.
             body  : string - The news post's content.
             date  : int - The news post's date (a JS date).
 ```
+
+## ```/worker/packs```
+This is an HTTP **get** request that lets you get all of the packs.
+
+Response structure:   
+```
+Object
+    error : bool - Has an error occurred?
+    packs : object<string, object> - The packs, where the key is the pack name, and the value is the pack's information.
+        Object
+            price   : int - The price of the pack.
+            color1  : string - The hex code of the first accent color of the pack.
+            color2  : string - The hex code of the second accent color of the pack.
+            image   : string - The pack's image.
+            blooks  : Array<string> - An array of the blooks in the pack.
+            hidden  : bool - Is the pack hidden?
+```
+
+## ```/worker/rarities```
+This is an HTTP **get** request that lets you get rarities of blooks.
+
+Response structure:   
+```
+Object
+    error    : bool - Has an error occurred?
+    rarities : object<string, object> - The rarities, where the key is the rarity name, and the value is the rarity's information.
+        Object
+            color     : string - The rarity's theme color.
+            animation : string - The rarity's animation (the animation that plays when getting a blook of this rarity)
+            exp       : int - The experience points you get when opening a blook of this rarity.
+            wait      : int - The wait time (in milliseconds) before the animation plays and the blook is revealed.
+```
+
+## ```/worker/blooks```
+This is an HTTP **get** request that lets you get a list of all the blooks.
+
+Response structure:
+```
+Object
+    error    : bool - Has an error occurred?
+    blooks   : object<string, object> - The entire list of all the blooks, where the key is the blook name, and the value is the blook's information.
+        Object
+            rarity   : string - The blook's assigned rarity.
+            chance   : int - The blook's chance (1%-100%).
+            price    : int - The selling price of the blook.
+            image    : string - A relative URL of the blook's image (what the blook looks like).
+            art      : string - A relative URL of the blook's art (the background of the blook that is visible in the sell menu).
+```
+
+## ```/worker/config```
+This is an HTTP **get** request that lets you get the instance's config.
+
+Response structure:
+```
+Object
+    name         : string - The instance's name.
+    version      : string - The instance's version.
+    welcome      : string - The main text shown on the home screen (such as "First Private Server")
+    description  : string - The description of the instance.
+    pronunciation: string - The text description of the pronunciation.
+    discord      : string - The instance's discord invite URL.
+    plus         : string - The Blacket Plus subscription's price.
+    rewards      : int - I don't exactly know what this does.
+    exp          : object<string, int> - Information about experience.
+    pages        : object<string, object> - Information about pages.
+        Object
+            link    : string - The link to the page.
+            icon    : string - The FontAwesome icon name.
+            isNews  : bool - If the page is the news page.
+            location: string - The page's location on the navbar. For example, "bottom" or "left."
+            perm    : string - The permission required to see the page.
 ```
