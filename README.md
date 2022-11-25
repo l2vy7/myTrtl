@@ -2,7 +2,7 @@
 myTrtl is a document explaining everything about the Blacket v2 API and how it can be used.
 
 ## HTTP endpoints
-HTTP endpoints are API endpoints you can visit on the web. For example, (/user/acai)[https://v2.blacket.org/worker/user/acai].
+HTTP endpoints are API endpoints you can visit on the web. For example, [/worker/user/acai](https://v2.blacket.org/worker/user/acai).
 
 ### ```/worker/user/:name```
 This gets a user's information by their name or ID.   
