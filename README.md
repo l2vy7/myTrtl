@@ -1,6 +1,8 @@
 # ```myTrtl```
 myTrtl is a document explaining everything about the Blacket v2 API and how it can be used.
 
+This document can be used so you can make your own Trtl!
+
 ## Tutorial
 Structures:   
 ```
