@@ -239,6 +239,42 @@ Object
             date  : int - The news post's date (a JS date).
 ```
 
+## ```/worker/set```
+This is an HTTP **post** request that sets your PFP or banner.
+
+Request structure:   
+```
+Object
+    type : string - Either 'blook' or 'banner'
+    banner : string - If the type is 'banner', this is the name of the banner.
+    blook : string - If the type is 'blook', this is the name of the blook.
+```
+
+Response structure:
+```
+Object
+    error : bool - Has an error occurred? If successful, this should be false.
+```
+
+## ```/worker/change```
+This is an HTTP **post** request that changes your username or password.
+
+Request structure:   
+```
+Object
+    type : string - Either 'username' or 'password'
+    username : string - If the type is 'username', this is your NEW username.
+    password : string - If the type is 'username', this is your OLD password.
+    oldPassword : string - If the type is 'password', this is your OLD username.
+    newPassword : string - If the type is 'password', this is your NEW password.
+```
+
+Response structure:
+```
+Object
+    error : bool - Has an error occurred? If successful, this should be false.
+```
+
 ## ```/worker/packs```
 This is an HTTP **get** request that lets you get all of the packs.
 
