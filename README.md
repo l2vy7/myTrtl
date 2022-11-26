@@ -13,7 +13,7 @@ Object - The JSON object sent or received during a request.
 HTTP requests (native JS on browser)   
 ```js
 // POST requests.
-fetch('https://v2.blacket.org/my/endpoint', {
+fetch('https://v2.blacket.org/worker/endpoint', {
     headers: {
         Cookie : 'connect.sid=mysessionid',
         'User-Agent' : 'MYUSERAGENT'
@@ -29,7 +29,7 @@ fetch('https://v2.blacket.org/my/endpoint', {
 });
 
 // GET requests.
-fetch('https://v2.blacket.org/my/endpoint', {
+fetch('https://v2.blacket.org/worker/endpoint', {
     headers: {
         Cookie : 'connect.sid=mysessionid',
         'User-Agent' : 'MYUSERAGENT'
